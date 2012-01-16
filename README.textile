@@ -1,0 +1,38 @@
+h1. Rda
+
+h2. Description
+
+Rda(Rails Development Assist) is combined with lots of useful rake tasks which
+can help you to setup your development enviroments and tools more quickly.
+
+h2. Features
+
+* Setup RVM for your rails application
+* Deploy your rails application to Nginx (rails_env is set to development by default)
+* Release your rails application
+
+h2. Usage
+
+h3. Installation
+
+<code>gem install rda</code>
+
+Or simply add the gem into Gemfile
+
+<code>gem 'rda'</code>
+
+h3. Setup RVM
+
+<code>rake rda:rvm:setup</code>
+
+h3. Setup Nginx
+
+<code>rake rda:nginx:setup</code>
+
+h3. Release your rails application
+
+<code> rake rda:release</code>
+
+h2. License
+
+This project rocks and uses MIT-LICENSE.
