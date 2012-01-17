@@ -2,8 +2,7 @@ h1. Rda
 
 h2. Description
 
-Rda(Rails Development Assist) is combined with lots of useful rake tasks which
-can help you to setup your development enviroments and tools more quickly.
+Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly.
 
 h2. Features
 
@@ -25,8 +24,7 @@ h3. Setup RVM
 
 <code>rake rda:rvm:setup</code>
 
-First of all, this task will check whether the RVM is installed. If RVM is installed,
-it will create a .rvmrc for the application with the content which looks like:
+First of all, this task will check whether the RVM is installed. If RVM is installed, it will create a .rvmrc for the application with the content which looks like:
 
 <pre>
 <code>
