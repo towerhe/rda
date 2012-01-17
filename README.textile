@@ -16,7 +16,7 @@ h3. Installation
 
 <code>gem install rda</code>
 
-Or simply add the gem into Gemfile
+Or simply add rda to the Gemfile
 
 <code>gem 'rda'</code>
 
