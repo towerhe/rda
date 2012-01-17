@@ -1,0 +1,5 @@
+if [[ -s "<%= gemset_env %>" ]]; then
+  . "<%= gemset_env %>
+else
+  rvm use <%= gemset_name %> --create
+fi

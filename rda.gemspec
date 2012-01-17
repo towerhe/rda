@@ -7,15 +7,26 @@ require "rda/version"
 Gem::Specification.new do |s|
   s.name        = "rda"
   s.version     = Rda::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Rda."
-  s.description = "TODO: Description of Rda."
+  s.authors     = ["Tower He"]
+  s.email       = ["towerhe@gmail.com"]
+  s.homepage    = "https://github.com/towerhe/rda"
+  s.summary     = "Rails Development Assist"
+  s.description = "Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files       = `git ls-files`.split("\n")
+  s.test_files  = `git ls-files -- {spec,features}/*`.split("\n")
+  s.require_paths = ["lib"]  
 
   s.add_dependency "rails", "~> 3.1.3"
+  s.add_dependency "thor"
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec"
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-bundler"
+  s.add_development_dependency "guard-rspec"
+  if RUBY_PLATFORM =~ /darwin/
+    s.add_development_dependency "ruby_gntp"
+  elsif RUBY_PLATFORM =~ /linux/
+    s.add_development_dependency "libnotify"
+  end
 end
