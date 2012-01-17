@@ -18,5 +18,14 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]  
 
   s.add_dependency "rails", "~> 3.1.3"
+
   s.add_development_dependency "rspec"
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-bundler"
+  s.add_development_dependency "guard-rspec"
+  if RUBY_PLATFORM =~ /darwin/
+    s.add_development_dependency "ruby_gntp"
+  elsif RUBY_PLATFORM =~ /linux/
+    s.add_development_dependency "libnotify"
+  end
 end
