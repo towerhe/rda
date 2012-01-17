@@ -38,6 +38,12 @@ fi
 
 If RVM is not installed this task will do nothing but exit.
 
+h3. Discard RVM settings
+
+<code>rake rda:rvm:discard</code>
+
+This task removes the .rvmrc from the your rails application.
+
 h3. Setup Nginx(not yet)
 
 <code>rake rda:nginx:setup</code>
