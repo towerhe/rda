@@ -28,6 +28,7 @@ h3. Setup RVM
 First of all, this task will check whether the RVM is installed. If RVM is installed,
 it will create a .rvmrc for the application with the content which looks like:
 
+<pre>
 <code>
 if [[ -s "/path/to/rvm/environments/ruby-1.9.3-p0@app_name" ]]; then
   . "/path/to/rvm/environments/ruby-1.9.3-p0@app_name"
@@ -35,14 +36,15 @@ else
   rvm use ruby-1.9.3-p0@app_name --create
 fi
 </code>
+</pre>
 
 If RVM is not installed this task will do nothing but exit.
 
-h3. Setup Nginx
+h3. Setup Nginx(not yet)
 
 <code>rake rda:nginx:setup</code>
 
-h3. Release your rails application
+h3. Release your rails application(not yet)
 
 <code> rake rda:release</code>
 
