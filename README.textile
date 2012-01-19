@@ -98,9 +98,11 @@ rvmsudo rake rda:nginx:discard # Using RVM
 
 This task will clean up all the things created or configured by rda:nginx:setup.
 
-h3. Restart application(not yet)
+h3. Restart application
 
 <code> rake rda:app:restart</code>
+
+This task touches tmp/restart.txt to restart your rails application, For detail, please visit http://modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_ruby_on_rails_application
 
 h3. Release your rails application(not yet)
 

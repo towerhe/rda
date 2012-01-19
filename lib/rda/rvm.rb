@@ -11,7 +11,7 @@ module Rda
       if installed?
         template('templates/rvmrc', rvmrc_path)
       else
-        puts "RVM is not found. Please make sure that RVM is installed."
+        $stderr.puts "ERROR: RVM is not found. Please make sure that RVM is installed."
       end
     end
 
@@ -20,7 +20,7 @@ module Rda
       if File.exists?(rvmrc_path)
         remove_file(rvmrc_path)
       else
-        puts "#{rvmrc_path} not found."
+        $stderr.puts "ERROR: #{rvmrc_path} not found."
       end
     end
 
