@@ -20,6 +20,20 @@ Or simply add rda to the Gemfile
 
 <code>gem 'rda'</code>
 
+h3. Configuration
+
+For configuring rda, you should create an initialize for rda:
+
+<pre>
+  <code>
+    # config/initializers/rda.rb
+    Rda.configure do
+      nginx_conf_paths ['/etc/nginx', '/opt/nginx/conf',
+'/usr/local/nginx/conf']
+    end
+  </code>
+</pre>
+
 h3. Setup RVM
 
 <code>rake rda:rvm:setup</code>
@@ -42,11 +56,45 @@ h3. Discard RVM settings
 
 <code>rake rda:rvm:discard</code>
 
-This task removes the .rvmrc from the your rails application.
+This task removes the .rvmrc from your rails application.
 
-h3. Setup Nginx(not yet)
+h3. Setup Nginx
 
 <code>rake rda:nginx:setup</code>
+
+Please make sure that you have the write permission, or you can run:
+
+<code>sudo rake rda:nginx:setup</code>
+
+First this task will try to find the config files of Nginx which you
+have installed from the following paths:
+
+* /etc/nginx
+* /usr/local/nginx/conf
+* /opt/nginx/conf
+
+You can change the default searching paths by:
+
+<pre>
+  <code>
+    Rda.configure { nginx_conf_paths ['/path/to/nginx/conf'] }
+  </code>
+</pre>
+
+If there are more than one paths found, it will give you a choice to decide
+which one will be used. After choosing a proper path, it will try to
+create two directories sites-available and sites-enabled to save the
+configs of rails applications.
+
+* sites-available saves the configs of the rails applications.
+* sites-enabled saves the link to the rails applications.
+
+Next it will set Nginx to include the configs under sites-enabled. It
+means that only the applications under sites-enabled will be loaded. And
+than it will create a config file for your application under
+sites-available and create a link to the config file under
+sites-enabled. After all, it will create a local hostname for your
+application in /etc/hosts.
 
 h3. Release your rails application(not yet)
 
