@@ -26,4 +26,13 @@ namespace :rda do
       nginx.discard
     end
   end
+
+  namespace :app do
+    app = Rda::App.new
+
+    desc "Restart rails application"
+    task :restart do
+      app.restart
+    end
+  end
 end
