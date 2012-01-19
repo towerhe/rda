@@ -1,0 +1,6 @@
+server {
+  server_name <%= hostname %>;
+  root <%= "#{::Rails.root}/public" %>;
+  passenger_enabled on;
+  rails_env development;
+}
