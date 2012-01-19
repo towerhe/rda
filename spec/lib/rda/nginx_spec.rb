@@ -103,8 +103,6 @@ http {
       FileUtils.mkdir_p dummy_path unless Dir.exists?(dummy_path)
       FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", dummy_path + '/nginx.conf')
       Rda.configure { nginx_conf_paths [File.dirname(__FILE__) + "/../../tmp/nginx"] }
-
-      subject.setup
     end
 
     after do
