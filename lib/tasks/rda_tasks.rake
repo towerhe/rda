@@ -12,4 +12,13 @@ namespace :rda do
       rvm.discard
     end
   end
+
+  namespace :nginx do
+    nginx = Rda::Nginx.new
+
+    desc "Setup Nginx for rails application"
+    task :setup => :environment do
+      nginx.setup
+    end
+  end
 end
