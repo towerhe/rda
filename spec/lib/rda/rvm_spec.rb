@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'dummy/config/application'
 
 describe Rda::Rvm do
   subject { Rda::Rvm.new }
