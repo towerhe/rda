@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Rda::Nginx do
   subject { Rda::Nginx.new }
 
+  before do
+    Rda.configure { nginx_conf_paths Rda::Nginx::DEFAULT_CONF_PATHS }
+  end
+
   describe '#setup' do
     context 'when nginx is not found' do
       before do
@@ -51,13 +55,13 @@ Found more than one config directory of Nginx, please choose one to setup:
     context 'when only one config directory of nginx found' do
       let(:dummy_path) { File.dirname(__FILE__) + "/../../tmp/nginx" }
 
-      before(:all) do
+      before do
         FileUtils.mkdir_p dummy_path unless Dir.exists?(dummy_path)
         FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", dummy_path + '/nginx.conf')
         Rda.configure { nginx_conf_paths [File.dirname(__FILE__) + "/../../tmp/nginx"] }
       end
 
-      after(:all) do
+      after do
         FileUtils.rm_r dummy_path unless Dir.exists?(dummy_path)
         Rda.configure { nginx_conf_paths Rda::Nginx::DEFAULT_CONF_PATHS }
       end

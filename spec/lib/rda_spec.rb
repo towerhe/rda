@@ -5,7 +5,6 @@ describe Rda do
     subject { Rda.config }
 
     it { should be_a(Confstruct::Configuration) }
-    its(:nginx_conf_paths) { should have(3).items }
   end
 
   describe '.configure' do
