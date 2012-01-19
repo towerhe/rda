@@ -61,8 +61,7 @@ h3. Setup Nginx
 
 <code>rake rda:nginx:setup</code>
 
-First this task will try to find the config files of Nginx which you
-have installed from the following paths:
+First this task will try to find the config files of Nginx which you have installed from the following paths:
 
 * /etc/nginx
 * /usr/local/nginx/conf
@@ -85,12 +84,27 @@ If there are more than one paths found, it will give you a choice to decide whic
 * sites-available saves the configs of the rails applications.
 * sites-enabled saves the link to the rails applications.
 
-Next it will set Nginx to include the configs under sites-enabled. It means that only the applications under sites-enabled will be loaded. And than it will create a config file for your application under
-sites-available and create a link to the config file under sites-enabled. After all, it will create a local hostname for your application in /etc/hosts.
+Next it will set Nginx to include the configs under sites-enabled. It means that only the applications under sites-enabled will be loaded. And than it will create a config file for your application under sites-available and create a link to the config file under sites-enabled. After all, it will create a local hostname for your application in /etc/hosts.
+
+h3. Discard Nginx settings
+
+<code>
+rake rda:nginx:discard # Or
+
+sudo rake rda:nginx:discard # Or
+
+rvmsudo rake rda:nginx:discard # Using RVM
+</code>
+
+This task will clean up all the things created or configured by rda:nginx:setup.
+
+h3. Restart application(not yet)
+
+<code> rake rda:app:restart</code>
 
 h3. Release your rails application(not yet)
 
-<code> rake rda:release</code>
+<code> rake rda:app:release</code>
 
 h2. License
 

@@ -62,7 +62,7 @@ Found more than one config directory of Nginx, please choose one to setup:
       end
 
       after do
-        FileUtils.rm_r dummy_path unless Dir.exists?(dummy_path)
+        FileUtils.rm_r dummy_path if Dir.exists?(dummy_path)
         Rda.configure { nginx_conf_paths Rda::Nginx::DEFAULT_CONF_PATHS }
       end
 
@@ -70,14 +70,14 @@ Found more than one config directory of Nginx, please choose one to setup:
         # creates sites-available and sites-enabled
         %W(available enabled).each do |n|
           path = "#{dummy_path}/sites-#{n}"
-          FileUtils.should_receive(:mkdir_p).with(path)
+          subject.should_receive(:empty_directory).with(path)
         end
 
         # sets Nginx to include sites-enabled
-        subject.should_receive(:gsub_file).with("#{dummy_path}/nginx.conf", /http {/, <<-INCLUDSION
+        subject.should_receive(:gsub_file).with("#{dummy_path}/nginx.conf", /http {/, <<-INCLUSION
 http {
   include #{dummy_path}/sites-enabled/*;
-          INCLUDSION
+          INCLUSION
         )
 
         # creates a nginx config file for the rails application under
@@ -86,13 +86,41 @@ http {
 
         # creates a symbol link to the nginx config file of the rails
         # application
-        subject.should_receive(:system).with("ln -s #{dummy_path}/sites-available/dummy.local #{dummy_path}/sites-enabled/dummy.local")
+        subject.should_receive(:link_file).with("#{dummy_path}/sites-available/dummy.local", "#{dummy_path}/sites-enabled/dummy.local")
 
         # creates a local hostname for the rails application
         subject.should_receive(:append_file).with("/etc/hosts", "dummy.local  127.0.0.1")
 
         subject.setup
       end
+    end
+  end
+
+  describe '#discard' do
+    let(:dummy_path) { File.dirname(__FILE__) + "/../../tmp/nginx" }
+
+    before do
+      FileUtils.mkdir_p dummy_path unless Dir.exists?(dummy_path)
+      FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", dummy_path + '/nginx.conf')
+      Rda.configure { nginx_conf_paths [File.dirname(__FILE__) + "/../../tmp/nginx"] }
+
+      subject.setup
+    end
+
+    after do
+      conf = Rda.config.nginx_conf_paths.first
+      FileUtils.rm_r conf if Dir.exists?(conf)
+
+      Rda.configure { nginx_conf_paths [Rda::Nginx::DEFAULT_CONF_PATHS] }
+    end
+
+    it 'discards the settings' do
+      subject.should_receive(:gsub_file).with("/etc/hosts", "dummy.local  127.0.0.1", '')
+      %W(enabled available).each do |n|
+        subject.should_receive(:remove_file).with("#{dummy_path}/sites-#{n}/dummy.local")
+      end
+
+      subject.discard
     end
   end
 end

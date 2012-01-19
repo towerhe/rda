@@ -7,7 +7,7 @@ namespace :rda do
       rvm.setup
     end
 
-    desc "Discard RVM settings for rails application"
+    desc "Discard RVM settings of rails application"
     task :discard do
       rvm.discard
     end
@@ -19,6 +19,11 @@ namespace :rda do
     desc "Setup Nginx for rails application"
     task :setup => :environment do
       nginx.setup
+    end
+
+    desc "Discard Nginx settings of rails application"
+    task :discard => :environment do
+      nginx.discard
     end
   end
 end
