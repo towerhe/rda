@@ -19,7 +19,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.1.3"
   s.add_dependency "thor"
+  s.add_dependency "confstruct"
 
+  s.add_development_dependency "pry"
   s.add_development_dependency "rspec"
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-bundler"
