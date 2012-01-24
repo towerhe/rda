@@ -22,7 +22,7 @@ Or simply add rda to the Gemfile
 
 h3. Configuration
 
-For configuring rda, you should create an initialize for rda:
+For configuring rda, you need to create an initializer for rda:
 
 <pre>
 <code>
@@ -88,6 +88,7 @@ Next it will set Nginx to include the configs under sites-enabled. It means that
 
 h3. Discard Nginx settings
 
+<pre>
 <code>
 rake rda:nginx:discard # Or
 
@@ -95,6 +96,7 @@ sudo rake rda:nginx:discard # Or
 
 rvmsudo rake rda:nginx:discard # Using RVM
 </code>
+</pre>
 
 This task will clean up all the things created or configured by rda:nginx:setup.
 
@@ -102,7 +104,7 @@ h3. Restart application
 
 <code> rake rda:app:restart</code>
 
-This task touches tmp/restart.txt to restart your rails application, For detail, please visit http://modrails.com/documentation/Users%20guide%20Nginx.html#_redeploying_restarting_the_ruby_on_rails_application
+This task touches tmp/restart.txt to restart your rails application, For detail, please visit "http://bit.ly/ztKA07":http://bit.ly/ztKA07
 
 h3. Release your rails application(not yet)
 
