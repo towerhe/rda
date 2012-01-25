@@ -30,7 +30,7 @@ describe Rda::Rvm do
 if [[ -s "#{ENV['rvm_path']}/environments/ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy" ]]; then
   . "#{ENV['rvm_path']}/environments/ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy"
 else
-  rvm use ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy --create
+  rvm --create use "ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy"
 fi
           RVMRC
 
