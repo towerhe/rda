@@ -28,7 +28,7 @@ describe Rda::Rvm do
         it "configs RVM properly" do
           contents = <<-RVMRC
 if [[ -s "#{ENV['rvm_path']}/environments/ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy" ]]; then
-  . "#{ENV['rvm_path']}/environments/ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy
+  . "#{ENV['rvm_path']}/environments/ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy"
 else
   rvm use ruby-#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}@dummy --create
 fi

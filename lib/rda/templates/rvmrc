@@ -1,5 +1,5 @@
 if [[ -s "<%= gemset_env %>" ]]; then
-  . "<%= gemset_env %>
+  . "<%= gemset_env %>"
 else
-  rvm use <%= gemset_name %> --create
+  rvm --create use "<%= gemset_name %>"
 fi
