@@ -94,7 +94,7 @@ module Rda
       conf = conf_path + '/nginx.conf'
       gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
 http {
-  include #{conf_path}/sites-enabled/*;
+    include #{conf_path}/sites-enabled/*;
       INCLUDE_SITES_ENABLED
     end
   end

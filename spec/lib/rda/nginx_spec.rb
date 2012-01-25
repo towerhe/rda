@@ -76,7 +76,7 @@ Found more than one config directory of Nginx, please choose one to setup:
         # sets Nginx to include sites-enabled
         subject.should_receive(:gsub_file).with("#{dummy_path}/nginx.conf", /http {/, <<-INCLUSION
 http {
-  include #{dummy_path}/sites-enabled/*;
+    include #{dummy_path}/sites-enabled/*;
           INCLUSION
         )
 
