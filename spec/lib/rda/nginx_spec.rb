@@ -67,11 +67,22 @@ Found more than one config directory of Nginx, please choose one to setup:
       end
 
       it 'sets Nginx properly' do
+        # loads RVM
+        subject.should_receive(:copy_file).with("templates/setup_load_paths.rb", "#{::Rails.root}/config/setup_load_paths.rb")
+
         # creates sites-available and sites-enabled
         %W(available enabled).each do |n|
           path = "#{dummy_path}/sites-#{n}"
           subject.should_receive(:empty_directory).with(path)
         end
+
+        # sets default passenger user and group
+        subject.should_receive(:gsub_file).with("#{dummy_path}/nginx.conf", /http {/, <<-PASSENGER
+http {
+    passenger_default_user root;
+    passenger_default_group root;
+          PASSENGER
+        )
 
         # sets Nginx to include sites-enabled
         subject.should_receive(:gsub_file).with("#{dummy_path}/nginx.conf", /http {/, <<-INCLUSION
@@ -117,6 +128,7 @@ http {
       %W(enabled available).each do |n|
         subject.should_receive(:remove_file).with("#{dummy_path}/sites-#{n}/dummy.local")
       end
+      subject.should_receive(:remove_file).with("#{::Rails.root}/config/setup_load_paths.rb")
 
       subject.discard
     end

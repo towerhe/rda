@@ -12,7 +12,9 @@ module Rda
     def setup
       return unless installed?
 
+      create_setup_load_paths
       mkdir_for_sites
+      set_passenger_user_and_group
       include_sites_enabled
 
       template("templates/nginx", "#{conf_path}/sites-available/#{hostname}")
@@ -26,10 +28,11 @@ module Rda
       return unless installed?
 
       %W(enabled available).each do |n|
-        remove_file("#{conf_path}/sites-#{n}/#{hostname}")
+        remove_file "#{conf_path}/sites-#{n}/#{hostname}"
       end
 
       gsub_file("/etc/hosts", "#{hostname}  127.0.0.1", '')
+      remove_file "#{::Rails.root}/config/setup_load_paths.rb"
     end
 
     private
@@ -83,11 +86,24 @@ module Rda
       index >= 0 && index < available_paths.size ? available_paths[index] : exit
     end
 
+    def create_setup_load_paths
+      copy_file "templates/setup_load_paths.rb", "#{::Rails.root}/config/setup_load_paths.rb"
+    end
+
     def mkdir_for_sites
       %W(available enabled).each do |n|
         dir = conf_path + "/sites-#{n}"
         empty_directory(dir) unless Dir.exists?(dir)
       end
+    end
+
+    def set_passenger_user_and_group
+      conf = conf_path + '/nginx.conf'
+      gsub_file conf, /http {/, <<-PASSENGER
+http {
+    passenger_default_user root;
+    passenger_default_group root;
+      PASSENGER
     end
 
     def include_sites_enabled
