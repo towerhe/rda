@@ -27,8 +27,10 @@ For configuring rda, you need to create an initializer for rda:
 <pre>
 <code>
 # config/initializers/rda.rb
-Rda.configure do
-  nginx_conf_paths ['/etc/nginx', '/opt/nginx/conf', '/usr/local/nginx/conf']
+if Rails.env == 'development'
+  Rda.configure do
+    nginx_conf_paths ['/etc/nginx', '/opt/nginx/conf', '/usr/local/nginx/conf']
+  end
 end
 </code>
 </pre>
