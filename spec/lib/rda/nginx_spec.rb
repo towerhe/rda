@@ -100,7 +100,7 @@ http {
         subject.should_receive(:link_file).with("#{dummy_path}/sites-available/dummy.local", "#{dummy_path}/sites-enabled/dummy.local")
 
         # creates a local hostname for the rails application
-        subject.should_receive(:append_file).with("/etc/hosts", "dummy.local  127.0.0.1")
+        subject.should_receive(:append_file).with("/etc/hosts", "127.0.0.1  dummy.local")
 
         subject.setup
       end
@@ -124,7 +124,7 @@ http {
     end
 
     it 'discards the settings' do
-      subject.should_receive(:gsub_file).with("/etc/hosts", "dummy.local  127.0.0.1", '')
+      subject.should_receive(:gsub_file).with("/etc/hosts", "127.0.0.1  dummy.local", '')
       %W(enabled available).each do |n|
         subject.should_receive(:remove_file).with("#{dummy_path}/sites-#{n}/dummy.local")
       end

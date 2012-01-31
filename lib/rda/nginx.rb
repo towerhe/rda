@@ -20,7 +20,7 @@ module Rda
       template("templates/nginx", "#{conf_path}/sites-available/#{hostname}")
       link_file("#{conf_path}/sites-available/#{hostname}", "#{conf_path}/sites-enabled/#{hostname}")
       
-      append_file "/etc/hosts", "#{hostname}  127.0.0.1"
+      append_file "/etc/hosts", "127.0.0.1  #{hostname}"
     end
 
     desc "Discard", "Remove the Nginx setting of rails application"
@@ -31,7 +31,7 @@ module Rda
         remove_file "#{conf_path}/sites-#{n}/#{hostname}"
       end
 
-      gsub_file("/etc/hosts", "#{hostname}  127.0.0.1", '')
+      gsub_file("/etc/hosts", "127.0.0.1  #{hostname}", '')
       remove_file "#{::Rails.root}/config/setup_load_paths.rb"
     end
 
