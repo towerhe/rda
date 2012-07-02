@@ -21,7 +21,7 @@ module Rda
       link_file("#{conf_path}/sites-available/#{hostname}", "#{conf_path}/sites-enabled/#{hostname}")
 
       unless configured?('/etc/hosts', "127.0.0.1  #{hostname}")
-        append_file "/etc/hosts", "127.0.0.1  #{hostname}"
+        append_file "/etc/hosts", "127.0.0.1  #{hostname}\n"
       end
     end
 
