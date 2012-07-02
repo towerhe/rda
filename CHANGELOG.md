@@ -4,6 +4,10 @@ TODO
 * Specify passenger_default_user and passenger_default_group manually
 * Specify the hostname of the application
 
+**0.0.6 (Mon, Jul 2, 2012)**
+
+* Fixed gemspec error
+
 **0.0.5 (Mon, Jul 2, 2012)**
 
 * Updated the dependencies
