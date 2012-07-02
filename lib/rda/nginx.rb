@@ -71,7 +71,7 @@ module Rda
     end
 
     def prompt_not_found
-      $stderr.puts "Config directory of Nginx is not found in the following paths:\n\n"
+      $stderr.puts "ERROR: Config directory of Nginx is not found in the following paths:\n\n"
       Rda.config.nginx_conf_paths.each { |p| $stderr.puts "* #{p}" }
       $stderr.puts "\n"
     end
@@ -99,19 +99,42 @@ module Rda
 
     def set_passenger_user_and_group
       conf = conf_path + '/nginx.conf'
-      gsub_file conf, /http {/, <<-PASSENGER
+
+      unless configured?('passenger_default_user')
+        gsub_file conf, /http {/, <<-PASSENGER
 http {
     passenger_default_user root;
+        PASSENGER
+      end
+
+      unless configured?('passenger_default_group')
+        gsub_file conf, /http {/, <<-PASSENGER
+http {
     passenger_default_group root;
-      PASSENGER
+        PASSENGER
+      end
     end
 
     def include_sites_enabled
       conf = conf_path + '/nginx.conf'
-      gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
+      unless configured?("include #{conf_path}/sites-enabled/*;")
+        gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
 http {
     include #{conf_path}/sites-enabled/*;
-      INCLUDE_SITES_ENABLED
+        INCLUDE_SITES_ENABLED
+      end
+    end
+
+    def configured?(conf)
+      conf_file = File.join(conf_path, 'nginx.conf')
+
+      File.open(conf_file) do |f|
+        f.readlines.each do |l|
+          return true if l.strip.start_with?(conf)
+        end
+      end
+
+      $stderr.puts "ERROR: #{conf} have already been configured!"
     end
   end
 end
