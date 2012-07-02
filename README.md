@@ -46,10 +46,10 @@ rake rda:rvm:setup
 First of all, this task will check whether the RVM is installed. If RVM is installed, it will create a .rvmrc for the application with the content which looks like:
 
 ```bash
-if [[ -s "/path/to/rvm/environments/ruby-1.9.3-p0@app_name" ]]; then
-  . "/path/to/rvm/environments/ruby-1.9.3-p0@app_name"
+if [[ -s '/path/to/rvm/environments/ruby-1.9.3-p194@app_name' ]]; then
+  . '/path/to/rvm/environments/ruby-1.9.3-p194@app_name'
 else
-  rvm use ruby-1.9.3-p0@app_name --create
+  rvm use ruby-1.9.3-p194@app_name --create
 fi
 ```
 
