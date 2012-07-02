@@ -22,6 +22,7 @@ group :test do
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rspec'
+  gem 'fivemat'
   if RUBY_PLATFORM =~ /darwin/
     gem 'ruby_gntp'
   elsif RUBY_PLATFORM =~ /linux/
