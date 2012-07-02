@@ -9,15 +9,15 @@ require 'rda/nginx'
 require 'rda/app'
 
 module Rda
-  @@config = Confstruct::Configuration.new do
-    nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf']
-  end
+  class << self
+    def config
+      @config ||= Confstruct::Configuration.new do
+        nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf']
+      end
+    end
 
-  def self.config
-    @@config
-  end
-
-  def self.configure(&block)
-    @@config.configure(&block)
+    def configure(&block)
+      config.configure(&block)
+    end
   end
 end
