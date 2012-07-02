@@ -21,7 +21,7 @@ module Rda
       link_file("#{conf_path}/sites-available/#{hostname}", "#{conf_path}/sites-enabled/#{hostname}")
 
       unless configured?('/etc/hosts', "127.0.0.1  #{hostname}")
-        append_file "/etc/hosts", "127.0.0.1  #{hostname}\n"
+        append_file "/etc/hosts", "127.0.0.1  #{hostname}"
       end
     end
 
@@ -131,7 +131,7 @@ http {
       File.open(fname) do |f|
         f.readlines.each do |l|
           if l.strip.start_with?(conf)
-            $stderr.puts "INFO: #{conf} have already been configured!"
+            $stderr.puts "INFO: #{conf} has already been set!"
 
             return true
           end
