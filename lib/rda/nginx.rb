@@ -19,8 +19,10 @@ module Rda
 
       template("templates/nginx", "#{conf_path}/sites-available/#{hostname}")
       link_file("#{conf_path}/sites-available/#{hostname}", "#{conf_path}/sites-enabled/#{hostname}")
-      
-      append_file "/etc/hosts", "127.0.0.1  #{hostname}"
+
+      unless configured?('/etc/hosts', "127.0.0.1  #{hostname}")
+        append_file "/etc/hosts", "127.0.0.1  #{hostname}"
+      end
     end
 
     desc "Discard", "Remove the Nginx setting of rails application"
@@ -100,14 +102,14 @@ module Rda
     def set_passenger_user_and_group
       conf = conf_path + '/nginx.conf'
 
-      unless configured?('passenger_default_user')
+      unless configured?(conf, 'passenger_default_user')
         gsub_file conf, /http {/, <<-PASSENGER
 http {
     passenger_default_user root;
         PASSENGER
       end
 
-      unless configured?('passenger_default_group')
+      unless configured?(conf, 'passenger_default_group')
         gsub_file conf, /http {/, <<-PASSENGER
 http {
     passenger_default_group root;
@@ -117,7 +119,7 @@ http {
 
     def include_sites_enabled
       conf = conf_path + '/nginx.conf'
-      unless configured?("include #{conf_path}/sites-enabled/*;")
+      unless configured?(conf, "include #{conf_path}/sites-enabled/*;")
         gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
 http {
     include #{conf_path}/sites-enabled/*;
@@ -125,16 +127,16 @@ http {
       end
     end
 
-    def configured?(conf)
-      conf_file = File.join(conf_path, 'nginx.conf')
-
-      File.open(conf_file) do |f|
+    def configured?(fname, conf)
+      File.open(fname) do |f|
         f.readlines.each do |l|
-          return true if l.strip.start_with?(conf)
+          if l.strip.start_with?(conf)
+            $stderr.puts "INFO: #{conf} have already been configured!"
+
+            return true
+          end
         end
       end
-
-      $stderr.puts "ERROR: #{conf} have already been configured!"
     end
   end
 end
