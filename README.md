@@ -123,7 +123,7 @@ This task will clean up all the things created or configured by rda:nginx:setup.
 rake rda:app:restart
 ```
 
-This task touches tmp/restart.txt to restart your rails application, For detail, please visit "http://bit.ly/ztKA07":http://bit.ly/ztKA07
+This task touches tmp/restart.txt to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
 
 #### Release your rails application(not yet)
 
