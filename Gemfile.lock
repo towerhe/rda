@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rda (0.0.4)
+    rda (0.0.5)
       confstruct
       rails (>= 3.1)
       thor
