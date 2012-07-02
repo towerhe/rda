@@ -1,6 +1,0 @@
-0.0.2 (Wed, Jan 25, 2012)
-
-* Fixed rvmrc template errors
-* Idented sites-enabled inclusion
-* Set default passenger user and group
-* Added setup_load_paths.rb
