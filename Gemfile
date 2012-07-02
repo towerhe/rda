@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source 'http://ruby.taobao.org'
 
 # Declare your gem's dependencies in rda.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -6,7 +6,7 @@ source "http://rubygems.org"
 gemspec
 
 # jquery-rails is used by the dummy application
-gem "jquery-rails"
+gem 'jquery-rails'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -15,3 +15,17 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+group :test do
+  gem 'pry'
+  gem 'rspec'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-rspec'
+  gem 'fivemat'
+  if RUBY_PLATFORM =~ /darwin/
+    gem 'ruby_gntp'
+  elsif RUBY_PLATFORM =~ /linux/
+    gem 'libnotify'
+  end
+end
