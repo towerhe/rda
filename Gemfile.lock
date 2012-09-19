@@ -130,12 +130,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fivemat
-  guard
-  guard-bundler
-  guard-rspec
+  fivemat (~> 1.0)
+  guard (~> 1.2)
+  guard-bundler (~> 1.0)
+  guard-rspec (~> 1.1)
   jquery-rails
-  pry
+  pry (~> 0.9.9)
   rda!
-  rspec
-  ruby_gntp
+  rspec (~> 2.10)
+  ruby_gntp (~> 0.3)
