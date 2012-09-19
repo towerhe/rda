@@ -7,15 +7,22 @@ begin
   require File.expand_path('./config/application', __FILE__)
 rescue LoadError
   $stderr.puts "ERROR: You should run rda under rails applications"
-  exit
 end
 
 class RdaCommand < Thor
-  desc 'nginx', 'Manage settings of nginx'
-  def nginx(action)
-    nginx = Rda::Nginx.new
+  desc 'rvm ACTION', 'Set up RVM. Available actions: setup, discard.'
+  def rvm(action)
+    Rda::Rvm.new.send(action.to_sym)
+  end
 
-    nginx.send(action.to_sym)
+  desc 'nginx ACTION', 'Manage settings of nginx. Available actions: setup, discard.'
+  def nginx(action)
+    Rda::Nginx.new.send(action.to_sym)
+  end
+
+  desc 'app ACTION', 'Manage the lifecycle of the application. Available actions: restart.'
+  def app(action)
+    Rda::App.new.send(action.to_sym)
   end
 end
 
