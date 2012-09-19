@@ -2,8 +2,6 @@ module Rda
   class Nginx < Thor
     include Thor::Actions
 
-    DEFAULT_CONF_PATHS = ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf']
-
     def self.source_root
       File.dirname(__FILE__)
     end
@@ -68,7 +66,6 @@ module Rda
 
     def available_paths
       search_paths = Rda.config.nginx_conf_paths || []
-      search_paths = DEFAULT_CONF_PATHS if search_paths.empty?
       @paths ||= search_paths.select { |p| Dir.exists? p if p } unless search_paths.empty?
     end
 
