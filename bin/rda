@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
-begin
-  require 'bundler/setup'
-rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
-end
+# -*- mode: ruby -*-
 
 require 'rda'
+
+begin
+  require File.expand_path('./config/application', __FILE__)
+rescue LoadError
+  $stderr.puts "ERROR: You should run rda under rails applications"
+  exit
+end
 
 class RdaCommand < Thor
   desc 'nginx', 'Manage settings of nginx'
