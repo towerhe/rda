@@ -1,6 +1,7 @@
 require 'rails'
 require 'thor'
 require 'confstruct'
+require 'confstruct/configuration'
 
 require 'rda/railtie'
 require 'rda/rails'

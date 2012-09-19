@@ -2,12 +2,12 @@ namespace :rda do
   namespace :rvm do
     rvm = Rda::Rvm.new
 
-    desc "Setup RVM for rails application"
+    desc "Set up RVM for your rails application"
     task :setup do
       rvm.setup
     end
 
-    desc "Discard RVM settings of rails application"
+    desc "Discard RVM settings of your rails application"
     task :discard do
       rvm.discard
     end
@@ -16,12 +16,12 @@ namespace :rda do
   namespace :nginx do
     nginx = Rda::Nginx.new
 
-    desc "Setup Nginx for rails application"
+    desc "Set up Nginx for your rails application"
     task :setup => :environment do
       nginx.setup
     end
 
-    desc "Discard Nginx settings of rails application"
+    desc "Discard Nginx settings of your rails application"
     task :discard => :environment do
       nginx.discard
     end
@@ -30,7 +30,7 @@ namespace :rda do
   namespace :app do
     app = Rda::App.new
 
-    desc "Restart rails application"
+    desc "Restart your rails application"
     task :restart do
       app.restart
     end
