@@ -2,13 +2,13 @@
 
 ### Description
 
-Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly.
+Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly. It is also provide a CLI to set up the enviroments.
 
 ### Features
 
-* Setup RVM for your rails application
+* Set up RVM for your rails application
 * Deploy your rails application to Nginx (rails_env is set to development by default)
-* Release your rails application
+* Release your rails application (not yet)
 
 ### Usage
 
@@ -37,9 +37,12 @@ if Rails.env == 'development'
 end
 ```
 
-#### Setup RVM
+#### Set up RVM
 
 ```bash
+rda rvm setup
+
+# Or
 rake rda:rvm:setup
 ```
 
@@ -53,7 +56,7 @@ else
 fi
 ```
 
-After RVM setup, you need to trust the rvmrc by:
+After setting up RVM, you need to trust the rvmrc by:
 
 ```bash
 rvm rvmrc trust
@@ -61,11 +64,14 @@ rvm rvmrc trust
 
 Or you can set `rvm_trust_rvmrcs_flag=1` in ~/.rvmrc or /etc/rvmrc.
 
-If RVM is not installed this task will do nothing but exit.
+If RVM is not installed, this task will do nothing but exit.
 
 #### Discard RVM settings
 
 ```bash
+rda rvm:discard
+
+# Or
 rake rda:rvm:discard
 ```
 
@@ -74,10 +80,13 @@ This task removes the .rvmrc from your rails application.
 #### Setup Nginx
 
 ```bash
+rda nginx setup
+
+# Or
 rake rda:nginx:setup
 ```
 
-First this task will try to find the config files of Nginx which you have installed from the following paths:
+First this task will try to find the config files of Nginx, which you have installed, from the following paths:
 
 * /etc/nginx
 * /usr/local/nginx/conf
@@ -92,6 +101,9 @@ Rda.configure { nginx_conf_paths ['/path/to/nginx/conf'] }
 Please make sure that you have the write permission of the directory you choosed, or you can run:
 
 ```bash
+rvmsudo rda nginx setup
+
+# Or
 rvmsudo rake rda:nginx:setup
 ```
 
@@ -108,9 +120,15 @@ Finally, You need to start Nginx `/path/to/nginx/sbin/nginx` and then visit http
 #### Discard Nginx settings
 
 ```bash
+rda nginx discard # Or
+
 rake rda:nginx:discard # Or
 
+sudo rda nginx discard # Or
+
 sudo rake rda:nginx:discard # Or
+
+rvmsudo rda nginx discard # Using RVM
 
 rvmsudo rake rda:nginx:discard # Using RVM
 ```
@@ -120,6 +138,9 @@ This task will clean up all the things created or configured by rda:nginx:setup.
 #### Restart application
 
 ```bash
+rda app restart
+
+# Or
 rake rda:app:restart
 ```
 
@@ -128,6 +149,9 @@ This task touches tmp/restart.txt to restart your rails application, For detail,
 #### Release your rails application(not yet)
 
 ```bash
+rda app release
+
+# Or
 rake rda:app:release
 ```
 

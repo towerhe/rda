@@ -6,7 +6,7 @@ module Rda
       File.dirname(__FILE__)
     end
 
-    desc "Setup", "Deploy rails application to Nginx"
+    desc "setup", "Set up your rails application"
     def setup
       return unless installed?
 
@@ -23,7 +23,7 @@ module Rda
       end
     end
 
-    desc "Discard", "Remove the Nginx setting of rails application"
+    desc "discard", "Remove the settings of your rails application from nginx"
     def discard
       return unless installed?
 
