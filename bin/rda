@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+begin
+  require 'bundler/setup'
+rescue LoadError
+  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+end
+
+require 'rda'
+
+class RdaCommand < Thor
+  desc 'nginx', 'Manage settings of nginx'
+  def nginx(action)
+    nginx = Rda::Nginx.new
+
+    nginx.send(action.to_sym)
+  end
+end
+
+RdaCommand.start
