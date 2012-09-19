@@ -2,13 +2,11 @@ module Rda
   class Nginx < Thor
     include Thor::Actions
 
-    DEFAULT_CONF_PATHS = ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf']
-
     def self.source_root
       File.dirname(__FILE__)
     end
 
-    desc "Setup", "Deploy rails application to Nginx"
+    desc "setup", "Set up your rails application"
     def setup
       return unless installed?
 
@@ -25,7 +23,7 @@ module Rda
       end
     end
 
-    desc "Discard", "Remove the Nginx setting of rails application"
+    desc "discard", "Remove the settings of your rails application from nginx"
     def discard
       return unless installed?
 
@@ -68,7 +66,6 @@ module Rda
 
     def available_paths
       search_paths = Rda.config.nginx_conf_paths || []
-      search_paths = DEFAULT_CONF_PATHS if search_paths.empty?
       @paths ||= search_paths.select { |p| Dir.exists? p if p } unless search_paths.empty?
     end
 

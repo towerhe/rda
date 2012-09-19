@@ -4,7 +4,7 @@ describe Rda::Nginx do
   subject { Rda::Nginx.new }
 
   before do
-    Rda.configure { nginx_conf_paths Rda::Nginx::DEFAULT_CONF_PATHS }
+    Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
   end
 
   describe '#setup' do
@@ -66,7 +66,7 @@ Found more than one config directory of Nginx, please choose one to setup:
       conf = Rda.config.nginx_conf_paths.first
       FileUtils.rm_r conf if Dir.exists?(conf)
 
-      Rda.configure { nginx_conf_paths [Rda::Nginx::DEFAULT_CONF_PATHS] }
+      Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
     end
 
     it 'discards the settings' do
