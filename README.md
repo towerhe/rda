@@ -80,7 +80,7 @@ This task removes the .rvmrc from your rails application.
 #### Setup Nginx
 
 ```bash
-rda nginx setup
+rda nginx setup --environment production --hostname www.example.com
 
 # Or
 rake rda:nginx:setup
@@ -101,7 +101,7 @@ Rda.configure { nginx_conf_paths ['/path/to/nginx/conf'] }
 Please make sure that you have the write permission of the directory you choosed, or you can run:
 
 ```bash
-rvmsudo rda nginx setup
+rvmsudo rda nginx setup --environment production --hostname www.example.com
 
 # Or
 rvmsudo rake rda:nginx:setup
@@ -120,15 +120,15 @@ Finally, You need to start Nginx `/path/to/nginx/sbin/nginx` and then visit http
 #### Discard Nginx settings
 
 ```bash
-rda nginx discard # Or
+rda nginx discard --hostname www.example.com # Or
 
 rake rda:nginx:discard # Or
 
-sudo rda nginx discard # Or
+sudo rda nginx discard --hostname www.example.com # Or
 
 sudo rake rda:nginx:discard # Or
 
-rvmsudo rda nginx discard # Using RVM
+rvmsudo rda nginx discard --hostname www.example.com # Using RVM
 
 rvmsudo rake rda:nginx:discard # Using RVM
 ```

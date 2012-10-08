@@ -7,8 +7,10 @@ module Rda
     end
 
     desc "setup", "Set up your rails application"
-    def setup
+    def setup(options = {})
       return unless installed?
+
+      @hostname, @environment = options["hostname"], options["environment"]
 
       create_setup_load_paths
       mkdir_for_sites
@@ -24,8 +26,10 @@ module Rda
     end
 
     desc "discard", "Remove the settings of your rails application from nginx"
-    def discard
+    def discard(options = {})
       return unless installed?
+
+      @hostname = options["hostname"]
 
       %W(enabled available).each do |n|
         remove_file "#{conf_path}/sites-#{n}/#{hostname}"
@@ -61,7 +65,7 @@ module Rda
     end
 
     def hostname
-      "#{Rda::Rails.app_name}.local"
+      @hostname || "#{Rda::Rails.app_name}.local"
     end
 
     def available_paths
