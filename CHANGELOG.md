@@ -1,8 +1,7 @@
-TODO
+**0.2.0 (Tue, Oct 9, 2012)**
 
-* Check the permission when setup nginx
-* Specify passenger_default_user and passenger_default_group manually
-* Specify the hostname of the application
+* Support to specify the environment of the application
+* Support to specify the hostname of the application
 
 **0.0.6 (Mon, Jul 2, 2012)**
 
