@@ -1,7 +1,6 @@
-**0.3.0 ()**
+**0.3.0 (Tue, Oct 9, 2012)**
 
 * Removed the rake tasks
-* Provide support to package the sources of the application
 * Provide support to release the application
 
 **0.2.0 (Tue, Oct 9, 2012)**
