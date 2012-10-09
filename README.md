@@ -2,13 +2,13 @@
 
 ### Description
 
-Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly. It is also provide a CLI to set up the enviroments.
+Rda(Rails Development Assist) is combined with lots of useful commands which can help you to setup your development enviroments and tools more quickly.
 
 ### Features
 
 * Set up RVM for your rails application
 * Deploy your rails application to Nginx (rails_env is set to development by default)
-* Release your rails application (not yet)
+* Release your rails application
 
 ### Usage
 
@@ -23,6 +23,8 @@ Or simply add rda to the Gemfile
 ```ruby
 gem 'rda'
 ```
+
+That's all.
 
 #### Configuration
 
@@ -41,12 +43,9 @@ end
 
 ```bash
 rda rvm setup
-
-# Or
-rake rda:rvm:setup
 ```
 
-First of all, this task will check whether the RVM is installed. If RVM is installed, it will create a .rvmrc for the application with the content which looks like:
+First of all, this command will check whether the RVM is installed. If RVM is installed, it will create a .rvmrc for the application with the content which looks like:
 
 ```bash
 if [[ -s '/path/to/rvm/environments/ruby-1.9.3-p194@app_name' ]]; then
@@ -64,29 +63,23 @@ rvm rvmrc trust
 
 Or you can set `rvm_trust_rvmrcs_flag=1` in ~/.rvmrc or /etc/rvmrc.
 
-If RVM is not installed, this task will do nothing but exit.
+If RVM is not installed, this command will do nothing but exit.
 
 #### Discard RVM settings
 
 ```bash
 rda rvm:discard
-
-# Or
-rake rda:rvm:discard
 ```
 
-This task removes the .rvmrc from your rails application.
+This command removes the .rvmrc from your rails application.
 
 #### Setup Nginx
 
 ```bash
 rda nginx setup --environment production --hostname www.example.com
-
-# Or
-rake rda:nginx:setup
 ```
 
-First this task will try to find the config files of Nginx, which you have installed, from the following paths:
+First this command will try to find the config files of Nginx, which you have installed, from the following paths:
 
 * /etc/nginx
 * /usr/local/nginx/conf
@@ -102,9 +95,6 @@ Please make sure that you have the write permission of the directory you choosed
 
 ```bash
 rvmsudo rda nginx setup --environment production --hostname www.example.com
-
-# Or
-rvmsudo rake rda:nginx:setup
 ```
 
 If there are more than one paths found, it will give you a choice to decide which one will be used. After choosing a proper path, it will try to create two directories sites-available and sites-enabled to save the configs of rails applications.
@@ -122,37 +112,27 @@ Finally, You need to start Nginx `/path/to/nginx/sbin/nginx` and then visit http
 ```bash
 rda nginx discard --hostname www.example.com # Or
 
-rake rda:nginx:discard # Or
-
 sudo rda nginx discard --hostname www.example.com # Or
 
-sudo rake rda:nginx:discard # Or
-
 rvmsudo rda nginx discard --hostname www.example.com # Using RVM
-
-rvmsudo rake rda:nginx:discard # Using RVM
 ```
 
-This task will clean up all the things created or configured by rda:nginx:setup.
+This command will clean up all the things created or configured by rda:nginx:setup.
 
 #### Restart application
 
 ```bash
 rda app restart
-
-# Or
-rake rda:app:restart
 ```
 
-This task touches tmp/restart.txt to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
+This command touches tmp/restart.txt to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
 
-#### Release your rails application(not yet)
+#### Release your rails application
+
+You should create a `VERSION` under your application root path.
 
 ```bash
 rda app release
-
-# Or
-rake rda:app:release
 ```
 
 ### License
