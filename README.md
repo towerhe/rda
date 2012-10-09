@@ -8,7 +8,7 @@ Rda(Rails Development Assist) is combined with lots of useful commands which can
 
 * Set up RVM for your rails application
 * Deploy your rails application to Nginx (rails_env is set to development by default)
-* Release your rails application (not yet)
+* Release your rails application
 
 ### Usage
 
@@ -127,7 +127,9 @@ rda app restart
 
 This command touches tmp/restart.txt to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
 
-#### Release your rails application(not yet)
+#### Release your rails application
+
+You should create a `VERSION` under your application root path.
 
 ```bash
 rda app release

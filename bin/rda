@@ -22,7 +22,7 @@ class RdaCommand < Thor
     Rda::Nginx.new.send(action.to_sym, options)
   end
 
-  desc 'app ACTION', 'Manage the lifecycle of the application. Available actions: restart.'
+  desc 'app ACTION', 'Manage the lifecycle of the application. Available actions: restart, release.'
   def app(action)
     Rda::App.new.send(action.to_sym)
   end
