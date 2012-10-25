@@ -1,9 +1,8 @@
-require 'rails'
 require 'thor'
 require 'confstruct'
 require 'confstruct/configuration'
+require 'active_support/inflector'
 
-require 'rda/railtie'
 require 'rda/rails'
 require 'rda/rvm'
 require 'rda/nginx'

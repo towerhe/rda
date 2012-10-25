@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'ruby_gntp', '~> 0.3'
   end
 
-  s.add_dependency 'rails', '>= 3.1'
-  s.add_dependency 'thor'
-  s.add_dependency 'confstruct'
+  s.add_dependency 'activesupport', '>= 3.1'
+  s.add_dependency 'thor', '~> 0.15'
+  s.add_dependency 'confstruct', '~> 0.2'
 end

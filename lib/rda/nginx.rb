@@ -36,7 +36,7 @@ module Rda
       end
 
       gsub_file("/etc/hosts", "127.0.0.1  #{hostname}", '')
-      remove_file "#{::Rails.root}/config/setup_load_paths.rb"
+      remove_file "#{Rda::Rails.root}/config/setup_load_paths.rb"
     end
 
     private
@@ -90,7 +90,7 @@ module Rda
     end
 
     def create_setup_load_paths
-      copy_file "templates/setup_load_paths.rb", "#{::Rails.root}/config/setup_load_paths.rb"
+      copy_file "templates/setup_load_paths.rb", "#{Rda::Rails.root}/config/setup_load_paths.rb"
     end
 
     def mkdir_for_sites

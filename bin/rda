@@ -4,7 +4,7 @@
 require 'rda'
 
 begin
-  require File.expand_path("#{Dir.pwd}/config/application", __FILE__)
+  Rda::Rails.app_name
 rescue LoadError
   $stderr.puts "ERROR: You should run rda under rails applications"
 end
