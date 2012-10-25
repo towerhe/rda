@@ -5,7 +5,7 @@ require 'rda'
 
 begin
   Rda::Rails.app_name
-rescue LoadError
+rescue
   $stderr.puts "ERROR: You should run rda under rails applications"
 end
 
