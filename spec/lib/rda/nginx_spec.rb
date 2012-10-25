@@ -5,6 +5,8 @@ describe Rda::Nginx do
 
   before do
     Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
+
+    Dir.chdir(File.join(File.dirname(__FILE__), '../../dummy'))
   end
 
   describe '#setup' do
@@ -74,7 +76,7 @@ Found more than one config directory of Nginx, please choose one to setup:
       %W(enabled available).each do |n|
         subject.should_receive(:remove_file).with("#{dummy_path}/sites-#{n}/dummy.local")
       end
-      subject.should_receive(:remove_file).with("#{::Rails.root}/config/setup_load_paths.rb")
+      subject.should_receive(:remove_file).with("#{Rda::Rails.root}/config/setup_load_paths.rb")
 
       subject.discard
     end

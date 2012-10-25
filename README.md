@@ -68,7 +68,7 @@ If RVM is not installed, this command will do nothing but exit.
 #### Discard RVM settings
 
 ```bash
-rda rvm:discard
+rda rvm discard
 ```
 
 This command removes the .rvmrc from your rails application.
@@ -117,7 +117,7 @@ sudo rda nginx discard --hostname www.example.com # Or
 rvmsudo rda nginx discard --hostname www.example.com # Using RVM
 ```
 
-This command will clean up all the things created or configured by rda:nginx:setup.
+This command will clean up all the things created or configured by `rda nginx setup`.
 
 #### Restart application
 

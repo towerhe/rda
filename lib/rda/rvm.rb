@@ -42,7 +42,7 @@ module Rda
     end
 
     def rvmrc_path
-      "#{::Rails.root}/.rvmrc"
+      "#{Rda::Rails.root}/.rvmrc"
     end
   end
 end
