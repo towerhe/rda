@@ -26,7 +26,7 @@ module Rda
 
     private
     def installed?
-      rvm_path && Dir.exists?(rvm_path)
+      rvm_path && File.directory?(rvm_path)
     end
 
     def rvm_path

@@ -34,7 +34,7 @@ module Rda
     private
     def dir_of(dir)
       dir = File.join(Rda::Rails.root.to_s, dir)
-      FileUtils.mkdir_p dir unless Dir.exists?(dir)
+      FileUtils.mkdir_p dir unless File.directory?(dir)
 
       dir
     end

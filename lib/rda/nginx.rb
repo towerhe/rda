@@ -41,7 +41,7 @@ module Rda
 
     private
     def installed?
-      Dir.exists?(conf_path) if conf_path
+      File.directory?(conf_path) if conf_path
     end
 
     def conf_path
@@ -70,7 +70,7 @@ module Rda
 
     def available_paths
       search_paths = Rda.config.nginx_conf_paths || []
-      @paths ||= search_paths.select { |p| Dir.exists? p if p } unless search_paths.empty?
+      @paths ||= search_paths.select { |p| File.directory? p if p } unless search_paths.empty?
     end
 
     def prompt_not_found
@@ -96,7 +96,7 @@ module Rda
     def mkdir_for_sites
       %W(available enabled).each do |n|
         dir = conf_path + "/sites-#{n}"
-        empty_directory(dir) unless Dir.exists?(dir)
+        empty_directory(dir) unless File.directory?(dir)
       end
     end
 
