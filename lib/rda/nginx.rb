@@ -104,14 +104,14 @@ module Rda
       conf = conf_path + '/nginx.conf'
 
       unless configured?(conf, 'passenger_default_user')
-        gsub_file conf, /http {/, <<-PASSENGER
+        gsub_file conf, /http \{/, <<-PASSENGER
 http {
     passenger_default_user root;
         PASSENGER
       end
 
       unless configured?(conf, 'passenger_default_group')
-        gsub_file conf, /http {/, <<-PASSENGER
+        gsub_file conf, /http \{/, <<-PASSENGER
 http {
     passenger_default_group root;
         PASSENGER
@@ -121,7 +121,7 @@ http {
     def include_sites_enabled
       conf = conf_path + '/nginx.conf'
       unless configured?(conf, "include #{conf_path}/sites-enabled/*;")
-        gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
+        gsub_file conf, /http \{/, <<-INCLUDE_SITES_ENABLED
 http {
     include #{conf_path}/sites-enabled/*;
         INCLUDE_SITES_ENABLED
