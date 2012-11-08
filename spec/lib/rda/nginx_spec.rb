@@ -12,9 +12,9 @@ describe Rda::Nginx do
   describe '#setup' do
     context 'when nginx is not found' do
       before do
-        Dir.should_receive(:exists?).with('/etc/nginx').and_return(false)
-        Dir.should_receive(:exists?).with('/usr/local/nginx/conf').and_return(false)
-        Dir.should_receive(:exists?).with('/opt/nginx/conf').and_return(false)
+        File.should_receive(:directory?).with('/etc/nginx').and_return(false)
+        File.should_receive(:directory?).with('/usr/local/nginx/conf').and_return(false)
+        File.should_receive(:directory?).with('/opt/nginx/conf').and_return(false)
       end
 
       it 'prompts nginx is not found' do
@@ -33,9 +33,9 @@ ERROR: Config directory of Nginx is not found in the following paths:
 
     context 'when found more than one config directory of nginx' do
       before do
-        Dir.should_receive(:exists?).with('/etc/nginx').and_return(true)
-        Dir.should_receive(:exists?).with('/usr/local/nginx/conf').and_return(true)
-        Dir.should_receive(:exists?).with('/opt/nginx/conf').and_return(false)
+        File.should_receive(:directory?).with('/etc/nginx').and_return(true)
+        File.should_receive(:directory?).with('/usr/local/nginx/conf').and_return(true)
+        File.should_receive(:directory?).with('/opt/nginx/conf').and_return(false)
       end
 
       it 'asks to choose one path' do
@@ -59,14 +59,14 @@ Found more than one config directory of Nginx, please choose one to setup:
     let(:dummy_path) { File.dirname(__FILE__) + "/../../tmp/nginx" }
 
     before do
-      FileUtils.mkdir_p dummy_path unless Dir.exists?(dummy_path)
+      FileUtils.mkdir_p dummy_path unless File.directory?(dummy_path)
       FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", dummy_path + '/nginx.conf')
       Rda.configure { nginx_conf_paths [File.dirname(__FILE__) + "/../../tmp/nginx"] }
     end
 
     after do
       conf = Rda.config.nginx_conf_paths.first
-      FileUtils.rm_r conf if Dir.exists?(conf)
+      FileUtils.rm_r conf if File.directory?(conf)
 
       Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
     end

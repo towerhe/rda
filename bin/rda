@@ -3,12 +3,6 @@
 
 require 'rda'
 
-begin
-  Rda::Rails.app_name
-rescue LoadError
-  $stderr.puts "ERROR: You should run rda under rails applications"
-end
-
 class RdaCommand < Thor
   desc 'rvm ACTION', 'Set up RVM. Available actions: setup, discard.'
   def rvm(action)

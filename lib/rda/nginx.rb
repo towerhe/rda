@@ -41,7 +41,7 @@ module Rda
 
     private
     def installed?
-      Dir.exists?(conf_path) if conf_path
+      File.directory?(conf_path) if conf_path
     end
 
     def conf_path
@@ -70,7 +70,7 @@ module Rda
 
     def available_paths
       search_paths = Rda.config.nginx_conf_paths || []
-      @paths ||= search_paths.select { |p| Dir.exists? p if p } unless search_paths.empty?
+      @paths ||= search_paths.select { |p| File.directory? p if p } unless search_paths.empty?
     end
 
     def prompt_not_found
@@ -96,7 +96,7 @@ module Rda
     def mkdir_for_sites
       %W(available enabled).each do |n|
         dir = conf_path + "/sites-#{n}"
-        empty_directory(dir) unless Dir.exists?(dir)
+        empty_directory(dir) unless File.directory?(dir)
       end
     end
 
@@ -104,14 +104,14 @@ module Rda
       conf = conf_path + '/nginx.conf'
 
       unless configured?(conf, 'passenger_default_user')
-        gsub_file conf, /http {/, <<-PASSENGER
+        gsub_file conf, /http \{/, <<-PASSENGER
 http {
     passenger_default_user root;
         PASSENGER
       end
 
       unless configured?(conf, 'passenger_default_group')
-        gsub_file conf, /http {/, <<-PASSENGER
+        gsub_file conf, /http \{/, <<-PASSENGER
 http {
     passenger_default_group root;
         PASSENGER
@@ -121,7 +121,7 @@ http {
     def include_sites_enabled
       conf = conf_path + '/nginx.conf'
       unless configured?(conf, "include #{conf_path}/sites-enabled/*;")
-        gsub_file conf, /http {/, <<-INCLUDE_SITES_ENABLED
+        gsub_file conf, /http \{/, <<-INCLUDE_SITES_ENABLED
 http {
     include #{conf_path}/sites-enabled/*;
         INCLUDE_SITES_ENABLED
