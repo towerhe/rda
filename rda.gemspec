@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ['towerhe@gmail.com']
   s.homepage    = 'https://github.com/towerhe/rda'
   s.summary     = 'Rails Development Assist'
-  s.description = 'Rda(Rails Development Assist) is combined with lots of useful rake tasks which can help you to setup your development enviroments and tools more quickly.'
+  s.description = 'Rda(Rails Development Assist) is combined with lots of useful commands which can help you to setup your development enviroments and tools more quickly.'
 
   s.executables = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f)}
   s.files       = `git ls-files`.split("\n")
