@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rda (0.3.2)
+    rda (0.3.3)
       activesupport (>= 3.1)
       confstruct (~> 0.2)
       thor (~> 0.15)
