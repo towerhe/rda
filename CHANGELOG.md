@@ -1,3 +1,17 @@
+**0.3.3 (Fri, Nov 9, 2012)**
+
+* Added a rake task for running specs
+* Removed rake tasks of rdoc
+* Fixed the description
+
+**0.3.2 (Thu, Nov 8, 2012)**
+
+* Ruby 1.8.7 compatible
+
+**0.3.1 (Tue, Nov 8, 2012)**
+
+* Do not run as a rails plugin, it is a plain gem.
+
 **0.3.0 (Tue, Oct 9, 2012)**
 
 * Removed the rake tasks
