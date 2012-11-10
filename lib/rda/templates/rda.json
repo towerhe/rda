@@ -57,6 +57,8 @@
     /**
      * This option allows you to specify the Ruby interpreter to use.
      *
+     * NOTE This option is supported by passenger 4.0 only.
+     *
      * @see http://www.modrails.com/documentation/Users%20guide%20Nginx%204.0.html#_passenger_ruby_lt_filename_gt
      * @optional
      */
