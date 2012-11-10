@@ -3,9 +3,13 @@ require 'spec_helper'
 describe Rda::Command do
   subject { Rda::Command.new }
 
-  before(:all) { Dir.chdir(File.join(File.dirname(__FILE__), '../../dummy')) }
-
   describe '#init' do
+    let(:tmp_path) { File.join(File.dirname(__FILE__), '../../tmp') }
+
+    before do
+      Rda::Rails.should_receive(:root).any_number_of_times.and_return(tmp_path)
+    end
+
     after { `rm -f #{Rda::Rails.root}/.rda` }
 
     it 'creates a file named .rda' do
