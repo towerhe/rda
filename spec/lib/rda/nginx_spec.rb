@@ -3,78 +3,44 @@ require 'spec_helper'
 describe Rda::Nginx do
   subject { Rda::Nginx.new }
 
-  before do
-    Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
+  let(:conf_dir) { File.join(File.dirname(__FILE__), '../../tmp') }
 
-    Dir.chdir(File.join(File.dirname(__FILE__), '../../dummy'))
+  before do
   end
 
   describe '#setup' do
-    context 'when nginx is not found' do
+    context 'when the config file of nginx is not found' do
       before do
-        File.should_receive(:directory?).with('/etc/nginx').and_return(false)
-        File.should_receive(:directory?).with('/usr/local/nginx/conf').and_return(false)
-        File.should_receive(:directory?).with('/opt/nginx/conf').and_return(false)
+        File.should_receive(:exists?).with('/opt/nginx/conf/nginx.conf').and_return(false)
       end
 
-      it 'prompts nginx is not found' do
+      it 'prompts `nginx.conf` is not found' do
         capture(:stderr) do
           subject.setup
         end.should == <<-PROMPT
-ERROR: Config directory of Nginx is not found in the following paths:
-
-* /etc/nginx
-* /usr/local/nginx/conf
-* /opt/nginx/conf
-
+ERROR: Missing `nginx.conf` in `/opt/nginx/conf`.
         PROMPT
-      end
-    end
-
-    context 'when found more than one config directory of nginx' do
-      before do
-        File.should_receive(:directory?).with('/etc/nginx').and_return(true)
-        File.should_receive(:directory?).with('/usr/local/nginx/conf').and_return(true)
-        File.should_receive(:directory?).with('/opt/nginx/conf').and_return(false)
-      end
-
-      it 'asks to choose one path' do
-        choice = <<-CHOICE
-1) /etc/nginx
-2) /usr/local/nginx/conf
-
-Found more than one config directory of Nginx, please choose one to setup:
-        CHOICE
-
-        $stdin.should_receive(:gets).and_return('\n')
-
-        capture(:stdout) do
-          subject.setup
-        end.strip.should == choice.strip
       end
     end
   end
 
   describe '#discard' do
-    let(:dummy_path) { File.dirname(__FILE__) + "/../../tmp/nginx" }
+    let(:conf_dir) { File.dirname(__FILE__) + "/../../tmp/nginx" }
 
     before do
-      FileUtils.mkdir_p dummy_path unless File.directory?(dummy_path)
-      FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", dummy_path + '/nginx.conf')
-      Rda.configure { nginx_conf_paths [File.dirname(__FILE__) + "/../../tmp/nginx"] }
+      FileUtils.mkdir_p conf_dir unless File.directory?(conf_dir)
+      FileUtils.copy_file(File.dirname(__FILE__) + "/../../fixtures/nginx.conf", conf_dir + '/nginx.conf')
+      Rda.stub_chain(:config, :nginx, :conf_dir).any_number_of_times.and_return(conf_dir)
     end
 
     after do
-      conf = Rda.config.nginx_conf_paths.first
-      FileUtils.rm_r conf if File.directory?(conf)
-
-      Rda.configure { nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf'] }
+      FileUtils.rm_r conf_dir if File.directory?(conf_dir)
     end
 
     it 'discards the settings' do
       subject.should_receive(:gsub_file).with("/etc/hosts", "127.0.0.1  dummy.local", '')
       %W(enabled available).each do |n|
-        subject.should_receive(:remove_file).with("#{dummy_path}/sites-#{n}/dummy.local")
+        subject.should_receive(:remove_file).with("#{conf_dir}/sites-#{n}/dummy.local")
       end
       subject.should_receive(:remove_file).with("#{Rda::Rails.root}/config/setup_load_paths.rb")
 

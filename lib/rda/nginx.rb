@@ -17,8 +17,8 @@ module Rda
       set_passenger_user_and_group
       include_sites_enabled
 
-      template("templates/nginx", "#{conf_path}/sites-available/#{hostname}")
-      link_file("#{conf_path}/sites-available/#{hostname}", "#{conf_path}/sites-enabled/#{hostname}")
+      template("templates/nginx", "#{conf_dir}/sites-available/#{hostname}")
+      link_file("#{conf_dir}/sites-available/#{hostname}", "#{conf_dir}/sites-enabled/#{hostname}")
 
       unless configured?('/etc/hosts', "127.0.0.1  #{hostname}")
         append_file "/etc/hosts", "127.0.0.1  #{hostname}"
@@ -32,7 +32,7 @@ module Rda
       @hostname = options["hostname"]
 
       %W(enabled available).each do |n|
-        remove_file "#{conf_path}/sites-#{n}/#{hostname}"
+        remove_file "#{conf_dir}/sites-#{n}/#{hostname}"
       end
 
       gsub_file("/etc/hosts", "127.0.0.1  #{hostname}", '')
@@ -41,52 +41,23 @@ module Rda
 
     private
     def installed?
-      File.directory?(conf_path) if conf_path
+      File.exists?(conf_path) if conf_path
+    end
+
+    def conf_dir
+      Rda.config.nginx.conf_dir
     end
 
     def conf_path
-      return @conf_path if @conf_path
-
-      if available_paths.empty?
-        prompt_not_found
-
-        return
+      if File.exists? File.join(conf_dir, 'nginx.conf')
+        return File.join(conf_dir, 'nginx.conf')
       end
 
-      @conf_path = available_paths.first
-      begin
-        @conf_path = ask_for_choosing_one if available_paths.size > 1
-      rescue SystemExit
-        $stderr.puts "ERROR: You need to choose a config directory of Nginx!"
-        return
-      end
-
-      @conf_path
+      $stderr.puts "ERROR: Missing `nginx.conf` in `#{conf_dir}`."
     end
 
     def hostname
       @hostname || "#{Rda::Rails.app_name}.local"
-    end
-
-    def available_paths
-      search_paths = Rda.config.nginx_conf_paths || []
-      @paths ||= search_paths.select { |p| File.directory? p if p } unless search_paths.empty?
-    end
-
-    def prompt_not_found
-      $stderr.puts "ERROR: Config directory of Nginx is not found in the following paths:\n\n"
-      Rda.config.nginx_conf_paths.each { |p| $stderr.puts "* #{p}" }
-      $stderr.puts "\n"
-    end
-
-    def ask_for_choosing_one
-      available_paths.each_with_index { |p, i| puts "#{i + 1}) #{p}" }
-      puts "\n"
-      chosen = ask "Found more than one config directory of Nginx, please choose one to setup:"
-
-      index = chosen.to_i - 1
-
-      index >= 0 && index < available_paths.size ? available_paths[index] : exit
     end
 
     def create_setup_load_paths
@@ -95,13 +66,13 @@ module Rda
 
     def mkdir_for_sites
       %W(available enabled).each do |n|
-        dir = conf_path + "/sites-#{n}"
+        dir = conf_dir + "/sites-#{n}"
         empty_directory(dir) unless File.directory?(dir)
       end
     end
 
     def set_passenger_user_and_group
-      conf = conf_path + '/nginx.conf'
+      conf = conf_dir + '/nginx.conf'
 
       unless configured?(conf, 'passenger_default_user')
         gsub_file conf, /http \{/, <<-PASSENGER
@@ -119,11 +90,10 @@ http {
     end
 
     def include_sites_enabled
-      conf = conf_path + '/nginx.conf'
-      unless configured?(conf, "include #{conf_path}/sites-enabled/*;")
+      unless configured?(conf_path, "include #{conf_dir}/sites-enabled/*;")
         gsub_file conf, /http \{/, <<-INCLUDE_SITES_ENABLED
 http {
-    include #{conf_path}/sites-enabled/*;
+    include #{conf_dir}/sites-enabled/*;
         INCLUDE_SITES_ENABLED
       end
     end
