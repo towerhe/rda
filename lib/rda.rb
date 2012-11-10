@@ -3,10 +3,7 @@ require 'confstruct'
 require 'confstruct/configuration'
 require 'active_support/inflector'
 
-require 'rda/rails'
-require 'rda/rvm'
-require 'rda/nginx'
-require 'rda/app'
+require 'rda/command'
 
 module Rda
   class << self
