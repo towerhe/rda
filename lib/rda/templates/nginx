@@ -1,6 +1,10 @@
 server {
-  server_name <%= hostname %>;
+  server_name <%= Rda.config.domain %>;
   root <%= "#{Rda::Rails.root}/public" %>;
+  rails_env <%= Rda.config.rails_env || "development" %>;
+
   passenger_enabled on;
-  rails_env <%= @environment || "development" %>;
+<% Rda.config.passenger.each do |k, v| %>
+  <%= "passenger_#{k} #{v};" %>
+<% end %>
 }
