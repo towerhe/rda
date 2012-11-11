@@ -1,5 +1,4 @@
-##
-Rda [![status](https://secure.travis-ci.org/towerhe/rda.png?branch=master)](http://travis-ci.org/towerhe/rda)
+## Rda [![status](https://secure.travis-ci.org/towerhe/rda.png?branch=develop)](http://travis-ci.org/towerhe/rda)
 
 ### Description
 
