@@ -4,6 +4,7 @@ require 'confstruct'
 require 'confstruct/configuration'
 require 'active_support/inflector'
 
+require 'rda/helper'
 require 'rda/command'
 
 module Rda
