@@ -24,9 +24,13 @@ Or simply add rda to the Gemfile
 gem 'rda'
 ```
 
-That's all.
+And then, you should run `rda init` under the root of your application.
 
 #### Configuration
+
+After you run `rda init` successfully. You will see a generated file
+named `.rda` under the root of your application and it contains options
+like:
 
 ```javascript
 // The configuration of rda should be a valid JSON hash
