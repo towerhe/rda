@@ -7,6 +7,7 @@ describe Rda::Command do
     let(:tmp_path) { File.join(File.dirname(__FILE__), '../../tmp') }
 
     before do
+      Rda::Rails.should_receive(:app_name).any_number_of_times.and_return('dummy')
       Rda::Rails.should_receive(:root).any_number_of_times.and_return(tmp_path)
     end
 
