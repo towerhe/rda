@@ -1,3 +1,10 @@
+**0.4.0 (2012)**
+
+* Provide support to configure options of rda
+* Set up load paths of applications when setting up rvm
+* Introduce a new command `rda app deploy` to deploy applications to
+  nginx
+
 **0.3.3 (Fri, Nov 9, 2012)**
 
 * Added a rake task for running specs
