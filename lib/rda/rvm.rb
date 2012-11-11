@@ -10,6 +10,7 @@ module Rda
     def setup
       if installed?
         template('templates/rvmrc', rvmrc_path)
+        create_setup_load_paths
       else
         $stderr.puts "ERROR: RVM is not found. Please make sure that RVM is installed."
       end
@@ -17,11 +18,8 @@ module Rda
 
     desc "discard", "Discard RVM settings for rails application"
     def discard
-      if File.exists?(rvmrc_path)
-        remove_file(rvmrc_path)
-      else
-        $stderr.puts "ERROR: #{rvmrc_path} not found."
-      end
+      remove_file(rvmrc_path)
+      remove_file(setup_load_paths_path)
     end
 
     private
@@ -43,6 +41,22 @@ module Rda
 
     def rvmrc_path
       "#{Rda::Rails.root}/.rvmrc"
+    end
+
+    def setup_load_paths_path
+      "#{Rda::Rails.root}/config/setup_load_paths.rb"
+    end
+
+    def create_setup_load_paths
+      copy_file "templates/setup_load_paths.rb", "#{Rda::Rails.root}/config/setup_load_paths.rb"
+    end
+
+    def remove_file(file)
+      if File.exists?(file)
+        super(file)
+      else
+        $stderr.puts "ERROR: #{file} not found."
+      end
     end
   end
 end

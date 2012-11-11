@@ -42,7 +42,6 @@ ERROR: Missing `nginx.conf` in `/opt/nginx/conf`.
       %W(enabled available).each do |n|
         subject.should_receive(:remove_file).with("#{conf_dir}/sites-#{n}/dummy.local")
       end
-      subject.should_receive(:remove_file).with("#{Rda::Rails.root}/config/setup_load_paths.rb")
 
       subject.discard
     end

@@ -17,12 +17,17 @@ describe Rda::Rvm do
 
       after(:all) do
         `rm -f #{Rda::Rails.root}/.rvmrc`
+        `rm -f #{Rda::Rails.root}/config/setup_load_paths.rb`
 
         ENV['rvm_path'] = @rvm_path
       end
 
       it 'creates a file named .rvmrc' do
         File.should be_exists("#{Rda::Rails.root}/.rvmrc")
+      end
+
+      it 'sets up loading paths' do
+        File.should be_exists("#{Rda::Rails.root}/config/setup_load_paths.rb")
       end
 
       describe 'checking the contents of .rvmrc' do
@@ -41,7 +46,7 @@ fi
         end
       end
     end
-    
+
     context 'when RVM is not installed' do
       before do
         subject.should_receive(:installed?).and_return(false)
@@ -52,7 +57,10 @@ fi
       it 'does not create .rvmrc' do
         File.should_not be_exists("#{Rda::Rails.root}/.rvmrc")
       end
-    end
 
+      it 'does not create `setup_load_paths`' do
+        File.should_not be_exists("#{Rda::Rails.root}/config/setup_load_paths.rb")
+      end
+    end
   end
 end

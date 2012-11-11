@@ -12,7 +12,6 @@ module Rda
 
       @hostname, @environment = options["hostname"], options["environment"]
 
-      create_setup_load_paths
       mkdir_for_sites
       set_passenger_user_and_group
       include_sites_enabled
@@ -36,7 +35,6 @@ module Rda
       end
 
       gsub_file("/etc/hosts", "127.0.0.1  #{hostname}", '')
-      remove_file "#{Rda::Rails.root}/config/setup_load_paths.rb"
     end
 
     private
@@ -58,10 +56,6 @@ module Rda
 
     def hostname
       @hostname || "#{Rda::Rails.app_name}.local"
-    end
-
-    def create_setup_load_paths
-      copy_file "templates/setup_load_paths.rb", "#{Rda::Rails.root}/config/setup_load_paths.rb"
     end
 
     def mkdir_for_sites
