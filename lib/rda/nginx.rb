@@ -11,6 +11,13 @@ module Rda
       include_sites_enabled
     end
 
+    def self.setup?
+      conf_dir = Rda.config.nginx.conf_dir
+
+      File.directory?(File.join(conf_dir, 'sites-available')) &&
+        File.directory?(File.join(conf_dir, 'sites-enabled'))
+    end
+
     private
     def installed?
       File.exists?(conf_path) if conf_path
