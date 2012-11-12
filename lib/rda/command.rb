@@ -21,8 +21,6 @@ module Rda
     end
 
     desc 'nginx ACTION', 'Manage settings of nginx. Available actions: setup, discard.'
-    method_option :environment, aliases: "-e", desc: "Set the environment of the application"
-    method_option :hostname, aliases: "-h", desc: "Set the hostname of the application"
     def nginx(action)
       Rda::Nginx.new.send(action.to_sym, options)
     end
