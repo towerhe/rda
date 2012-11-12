@@ -1,4 +1,8 @@
-## Rda [![status](https://secure.travis-ci.org/towerhe/rda.png?branch=develop)](http://travis-ci.org/towerhe/rda)
+## Rda
+
+[![Build Status](https://secure.travis-ci.org/towerhe/rda.png?branch=develop)](http://travis-ci.org/towerhe/rda)
+[![Dependency Status](https://gemnasium.com/towerhe/rda.png)](https://gemnasium.com/towerhe/rda)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/towerhe/rda)
 
 ### Description
 
