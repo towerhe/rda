@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rda (0.3.3)
+    rda (0.4.0.pre)
       activesupport (>= 3.1)
       confstruct (~> 0.2)
       oj (~> 1.4.4)
