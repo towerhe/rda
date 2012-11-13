@@ -1,18 +1,21 @@
 require 'thor'
+require 'oj'
 require 'confstruct'
 require 'confstruct/configuration'
 require 'active_support/inflector'
 
-require 'rda/rails'
-require 'rda/rvm'
-require 'rda/nginx'
-require 'rda/app'
+require 'rda/helper'
+require 'rda/command'
 
 module Rda
   class << self
     def config
-      @config ||= Confstruct::Configuration.new do
-        nginx_conf_paths ['/etc/nginx', '/usr/local/nginx/conf', '/opt/nginx/conf']
+      begin
+        @config ||= Confstruct::Configuration.new(
+          Oj.load(File.open(File.join(Rda::Rails.root, '.rda')))
+        )
+      rescue Errno::ENOENT
+        $stderr.puts 'ERROR: Rda is not initialized, please run `rda init` first.'
       end
     end
 

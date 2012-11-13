@@ -1,5 +1,9 @@
 ## Rda
 
+[![Build Status](https://secure.travis-ci.org/towerhe/rda.png?branch=develop)](http://travis-ci.org/towerhe/rda)
+[![Dependency Status](https://gemnasium.com/towerhe/rda.png)](https://gemnasium.com/towerhe/rda)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/towerhe/rda)
+
 ### Description
 
 Rda(Rails Development Assist) is combined with lots of useful commands which can help you to setup your development enviroments and tools more quickly.
@@ -24,20 +28,14 @@ Or simply add rda to the Gemfile
 gem 'rda'
 ```
 
-That's all.
+And then, you should run `rda init` under the root of your application.
 
 #### Configuration
 
-For configuring rda, you need to create an initializer for rda:
-
-```ruby
-# config/initializers/rda.rb
-if Rails.env == 'development'
-  Rda.configure do
-    nginx_conf_paths ['/etc/nginx', '/opt/nginx/conf', '/usr/local/nginx/conf']
-  end
-end
-```
+After you run `rda init` successfully. You will see a generated file
+named `.rda` under the root of your application and it contains options
+like:
+[rda.json](https://github.com/towerhe/rda/blob/develop/lib/rda/templates/rda.json)
 
 #### Set up RVM
 
@@ -48,11 +46,31 @@ rda rvm setup
 First of all, this command will check whether the RVM is installed. If RVM is installed, it will create a .rvmrc for the application with the content which looks like:
 
 ```bash
-if [[ -s '/path/to/rvm/environments/ruby-1.9.3-p194@app_name' ]]; then
-  . '/path/to/rvm/environments/ruby-1.9.3-p194@app_name'
+if [[ -s '/path/to/rvm/environments/ruby-1.9.3-p286@app_name' ]]; then
+  . '/path/to/rvm/environments/ruby-1.9.3-p286@app_name'
 else
-  rvm use ruby-1.9.3-p194@app_name --create
+  rvm use ruby-1.9.3-p286@app_name --create
 fi
+```
+
+And then, it will create a config file to set up load paths of your
+applications.
+
+```ruby
+# config/setup_load_paths.rb
+if ENV['MY_RUBY_HOME'] && ENV['MY_RUBY_HOME'].include?('rvm')
+  begin
+    require 'rvm'
+    RVM.use_from_path! File.dirname(File.dirname(__FILE__))
+  rescue LoadError
+    raise "RVM gem is currently unavailable."
+  end
+end
+
+# If you're not using Bundler at all, remove lines bellow
+ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile',
+                                         File.dirname(__FILE__))
+require 'bundler/setup'
 ```
 
 After setting up RVM, you need to trust the rvmrc by:
@@ -71,53 +89,36 @@ If RVM is not installed, this command will do nothing but exit.
 rda rvm discard
 ```
 
-This command removes the .rvmrc from your rails application.
+This command removes the `.rvmrc` and `config/setup_load_paths.rb` from your rails application.
 
 #### Setup Nginx
 
 ```bash
-rda nginx setup --environment production --hostname www.example.com
+rda nginx setup
 ```
 
-First this command will try to find the config files of Nginx, which you have installed, from the following paths:
-
-* /etc/nginx
-* /usr/local/nginx/conf
-* /opt/nginx/conf
-
-You can change the default searching paths by:
-
-```ruby
-Rda.configure { nginx_conf_paths ['/path/to/nginx/conf'] }
-```
-
-Please make sure that you have the write permission of the directory you choosed, or you can run:
+Please make sure that you have the write permission to config your nginx, or you can run:
 
 ```bash
-rvmsudo rda nginx setup --environment production --hostname www.example.com
+rvmsudo rda nginx setup
 ```
 
-If there are more than one paths found, it will give you a choice to decide which one will be used. After choosing a proper path, it will try to create two directories sites-available and sites-enabled to save the configs of rails applications.
+It will try to create `sites-available` and `sites-enabled` to save the configs of rails applications.
 
 * sites-available saves the configs of the rails applications.
 * sites-enabled saves the link to the rails applications.
 
-Next it will set Nginx to include the configs under sites-enabled. It means that only the applications under sites-enabled will be loaded. And than it will create a config file for your application under sites-available and create a link to the config file under sites-enabled. After all, it will create a local hostname for your application in /etc/hosts.
+Next it will set Nginx to include the configs under `sites-enabled`. It means that only the applications configured under `sites-enabled` will be loaded.
 
+#### Deploy application
 
-Finally, You need to start Nginx `/path/to/nginx/sbin/nginx` and then visit http://your_app_name.local.
-
-#### Discard Nginx settings
+Now you should deploy your applications with a new command of rda.
 
 ```bash
-rda nginx discard --hostname www.example.com # Or
-
-sudo rda nginx discard --hostname www.example.com # Or
-
-rvmsudo rda nginx discard --hostname www.example.com # Using RVM
+rda app deploy
 ```
 
-This command will clean up all the things created or configured by `rda nginx setup`.
+It will create a config file for your application under `sites-available` and create a link to the config file under `sites-enabled`. After all, it will create a local hostname for your application in `/etc/hosts`.
 
 #### Restart application
 
@@ -125,7 +126,7 @@ This command will clean up all the things created or configured by `rda nginx se
 rda app restart
 ```
 
-This command touches tmp/restart.txt to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
+This command touches `tmp/restart.txt` to restart your rails application, For detail, please visit [http://bit.ly/ztKA07](http://bit.ly/ztKA07)
 
 #### Release your rails application
 
