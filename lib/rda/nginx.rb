@@ -44,7 +44,7 @@ module Rda
 
     def include_sites_enabled
       unless configured?(conf_path, "include #{conf_dir}/sites-enabled/*;")
-        gsub_file conf, /http \{/, <<-INCLUDE_SITES_ENABLED
+        gsub_file conf_path, /http \{/, <<-INCLUDE_SITES_ENABLED
 http {
     include #{conf_dir}/sites-enabled/*;
         INCLUDE_SITES_ENABLED
