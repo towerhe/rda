@@ -50,7 +50,7 @@ module Rda
       system("cd #{pkg_dir};tar czf #{app_name}-#{version}.src.tar.gz #{app_name}")
 
       puts "Create the bin release..."
-      system("bundle package")
+      system("bundle package --all")
       system("mv #{Rda::Rails.root}/vendor/cache #{tmp_dir}/vendor")
       system("cd #{pkg_dir};tar czf #{app_name}-#{version}.bin.tar.gz #{app_name}")
       system("rm -fr #{tmp_dir}")
