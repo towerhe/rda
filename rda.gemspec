@@ -31,5 +31,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '>= 3.1'
   s.add_dependency 'thor', '~> 0.15'
   s.add_dependency 'confstruct', '~> 0.2'
-  s.add_dependency 'oj', '~> 1.4.4'
+
+  if RUBY_PLATFORM == 'java'
+    s.add_dependency 'json_pure', '~> 1.7.7'
+  else
+    s.add_dependency 'oj', '~> 1.4.4'
+  end
 end
