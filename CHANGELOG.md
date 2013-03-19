@@ -1,3 +1,7 @@
+**0.4.1 (Tue, Mar 19, 2013)
+
+* Compatible with JRuby
+
 **0.4.0 (2012)**
 
 * Provide support to configure options of rda
