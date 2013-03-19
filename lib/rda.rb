@@ -1,5 +1,5 @@
 require 'thor'
-require 'oj'
+require 'multi_json'
 require 'confstruct'
 require 'confstruct/configuration'
 require 'active_support/inflector'
@@ -12,7 +12,7 @@ module Rda
     def config
       begin
         @config ||= Confstruct::Configuration.new(
-          Oj.load(File.open(File.join(Rda::Rails.root, '.rda')))
+          MultiJson.load(File.open(File.join(Rda::Rails.root, '.rda')))
         )
       rescue Errno::ENOENT
         $stderr.puts 'ERROR: Rda is not initialized, please run `rda init` first.'
